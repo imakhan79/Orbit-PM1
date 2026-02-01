@@ -1,13 +1,21 @@
 
-import React from 'react';
-import { Project, TaskStatus, Priority } from './types';
+import { Project, TaskStatus, Priority, ProjectStatus, ProjectHealth } from './types';
 
+// Fix: Updated Project and Task properties to match types.ts interface (assignee -> assigneeId, owner -> ownerId)
+// and added missing required fields (health, startDate, endDate).
 export const SAMPLE_PROJECTS: Project[] = [
   {
     id: 'p1',
     name: 'Apollo Re-launch',
     description: 'Modernizing the legacy flight control systems for high-altitude orbital testing.',
     progress: 65,
+    status: ProjectStatus.ACTIVE,
+    priority: Priority.HIGH,
+    health: ProjectHealth.HEALTHY,
+    startDate: '2024-01-10',
+    endDate: '2024-12-31',
+    ownerId: 'James Miller',
+    createdAt: '2024-01-10T09:00:00Z',
     members: ['Alex Rivera', 'Sarah Chen', 'Mike Ross'],
     tasks: [
       {
@@ -16,7 +24,7 @@ export const SAMPLE_PROJECTS: Project[] = [
         description: 'Refactor Node.js endpoints for 30% faster latency.',
         status: TaskStatus.IN_PROGRESS,
         priority: Priority.HIGH,
-        assignee: 'Alex Rivera',
+        assigneeId: 'Alex Rivera',
         dueDate: '2024-06-15'
       },
       {
@@ -25,7 +33,7 @@ export const SAMPLE_PROJECTS: Project[] = [
         description: 'Design the new telemetry dashboard screens.',
         status: TaskStatus.DONE,
         priority: Priority.MEDIUM,
-        assignee: 'Sarah Chen',
+        assigneeId: 'Sarah Chen',
         dueDate: '2024-05-20'
       }
     ]
@@ -35,6 +43,13 @@ export const SAMPLE_PROJECTS: Project[] = [
     name: 'Orbit Dashboard SDK',
     description: 'Public SDK for third-party integration with our project tracking APIs.',
     progress: 30,
+    status: ProjectStatus.ACTIVE,
+    priority: Priority.MEDIUM,
+    health: ProjectHealth.HEALTHY,
+    startDate: '2024-02-15',
+    endDate: '2024-09-30',
+    ownerId: 'James Miller',
+    createdAt: '2024-02-15T10:30:00Z',
     members: ['John Doe', 'Emily Watson'],
     tasks: [
       {
@@ -43,7 +58,7 @@ export const SAMPLE_PROJECTS: Project[] = [
         description: 'Write initial README and API endpoint docs.',
         status: TaskStatus.TODO,
         priority: Priority.MEDIUM,
-        assignee: 'John Doe',
+        assigneeId: 'John Doe',
         dueDate: '2024-07-01'
       }
     ]

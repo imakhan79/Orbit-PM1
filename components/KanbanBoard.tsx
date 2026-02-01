@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Project, Task, TaskStatus, Priority } from '../types';
-import { STATUS_COLORS, PRIORITY_COLORS } from '../constants';
+import { Project, Task, TaskStatus } from '../types';
+import { PRIORITY_COLORS } from '../constants';
 import { updateTaskStatus } from '../services/supabaseClient';
 
 interface KanbanBoardProps {
@@ -27,7 +27,8 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ project }) => {
     const previousTasks = [...tasks];
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: newStatus } : t));
     
-    const success = await updateTaskStatus(taskId, newStatus);
+    // Fix: Passing an object { status: newStatus } to match the required Partial update structure
+    const success = await updateTaskStatus(taskId, { status: newStatus });
     if (!success) {
       setTasks(previousTasks); // Rollback on failure
       alert('Failed to update task on Supabase.');
@@ -116,11 +117,12 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ project }) => {
                       </svg>
                       <span className="text-[10px] font-medium">{new Date(task.dueDate).toLocaleDateString()}</span>
                     </div>
+                    {/* Fix: Changed task.assignee to task.assigneeId to match the Task interface */}
                     <img 
-                      src={`https://picsum.photos/seed/${task.assignee}/24/24`} 
+                      src={`https://picsum.photos/seed/${task.assigneeId}/24/24`} 
                       className="w-6 h-6 rounded-full" 
-                      title={task.assignee}
-                      alt={task.assignee}
+                      title={task.assigneeId}
+                      alt={task.assigneeId}
                     />
                   </div>
                 </div>
